@@ -11,9 +11,7 @@ preloader.prototype = {
         this.add.text(this.game.world.centerX - 37,  this.game.world.centerY - 150, "", {
             font: '18px', fill: 'lightgrey', align: 'center'
         });
-        
-        game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
-         
+
         game.load.image('bg', 'assets/oranim/images/bg.png');
         
         game.load.image('box0', 'assets/oranim/images/box1.png');
@@ -49,10 +47,11 @@ preloader.prototype = {
         game.load.audio('plane', 'assets/oranim/audio/plane.mp3');
         game.load.audio('trumpet', 'assets/oranim/audio/trumpet.mp3');
         game.load.audio('train', 'assets/oranim/audio/train.mp3');
-        
         game.load.audio('alarm_clock', 'assets/oranim/audio/alarm_clock.mp3');
         game.load.audio('helicopter', 'assets/oranim/audio/helicopter.mp3');
         game.load.audio('cookoo', 'assets/oranim/audio/cookoo.mp3');
+        
+        game.load.audio('clock', 'assets/oranim/audio/clock.mp3');
     },
     
     create: function(){

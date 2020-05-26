@@ -4,14 +4,6 @@ document.addEventListener("resume", onResume, false);
 
 //window.onload = start;
 
-WebFontConfig = {
-    google: {
-      families: ['Zhi Mang Xing']
-    }
-};
-
-FONT = WebFontConfig.google.families[0]; 
-
 function start(){
     WIDTH = 1440; 
     HEIGHT = 600;

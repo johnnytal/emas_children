@@ -59,7 +59,7 @@ game_main.prototype = {
     	
     	tempoSprite = game.add.sprite(1150, 57, 'tempo');     
     	tempoSprite.scale.set(.65, .65);      
-        tempoText = game.add.text(1210, 60, bpm, {font: '34px ' + FONT, fill: '#6e5443', align: 'center'});
+        tempoText = game.add.text(1205, 60, bpm, {font: '28px', fill: '#6e5443', align: 'center'});
 
  
         for (n = 0; n < N_ROWS * N_COLUMNS; n++){
@@ -94,7 +94,7 @@ function changeTempo(){
 		resetBpmChange = true;
 	}, 500);
 	
-	cookooSfx.play();
+	clockSfx.play();
 	
 	tempoSprite.tint = 0xff0000;
 	setTimeout(function(){ tempoSprite.tint = 0xffffff; }, 500);
@@ -232,11 +232,11 @@ function loadSounds(){
 	planeSfx = game.add.audio('plane', 1, false);
 	trumpetSfx = game.add.audio('trumpet', 1, false);
 	trainSfx = game.add.audio('train', 1, false);
-	
 	alarm_clockSfx = game.add.audio('alarm_clock', 1, false);
 	helicopterSfx = game.add.audio('helicopter', 1, false);
-
 	cookooSfx = game.add.audio('cookoo', 1, false);
+	
+	clockSfx = game.add.audio('clock', 0.7, false);
         
 	soundsArray = [
 		ballSfx, drumSfx, carSfx, horseSfx, planeSfx, trumpetSfx, trainSfx, alarm_clockSfx, helicopterSfx, cookooSfx
