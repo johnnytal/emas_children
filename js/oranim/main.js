@@ -2,7 +2,7 @@ var game_main = function(game){
     N_ROWS = 12;
     N_COLUMNS = 3;
 
-    bpm = 115;
+    bpm = 120;
     box_n = 0;
     row = 0;
     
@@ -21,7 +21,7 @@ game_main.prototype = {
     create: function(){
     	loadSounds();
     	initAd();
-    	plugIns();
+		try{StatusBar.hide;} catch(e){} 
     	
     	bg = game.add.image(0, 0, 'bg');
     	bg.alpha = 0.22;
@@ -46,9 +46,9 @@ game_main.prototype = {
 		power_reset.inputEnabled = true;
 		power_reset.events.onInputDown.add(function(){
 			location.reload();
+			power_reset.tint = 0xff00f0;
 			if(AdMob) AdMob.showInterstitial();
 		}, this);
-		power_reset.scale.set(.85, .85);
 		power_reset.alpha = 0.8;
     	
     	boxTempo = game.add.sprite(1125, 30, 'boxBg');
@@ -57,8 +57,7 @@ game_main.prototype = {
         boxTempo.inputEnabled = true;
     	boxTempo.events.onInputDown.add(changeTempo, this);
     	
-    	tempoSprite = game.add.sprite(1150, 57, 'tempo');     
-    	tempoSprite.scale.set(.65, .65);      
+    	tempoSprite = game.add.sprite(1150, 54, 'tempo');     
         tempoText = game.add.text(1205, 60, bpm, {font: '28px', fill: '#6e5443', align: 'center'});
 
  
@@ -82,10 +81,10 @@ function changeTempo(){
  	resetBpmChange = false;
 	
 	if (bpm < 240){
-		bpm += 25;	
+		bpm += 30;	
 	}
 	else{
-		bpm = 65;
+		bpm = 60;
 	}
 	
 	tempoText.text = bpm;
@@ -245,17 +244,6 @@ function loadSounds(){
 	shuffle(soundsArray);
 }
 
-function plugIns(){
-	setTimeout(function(){
-		try{
-            StatusBar.hide;
-        } catch(e){} 
-        try{
-            window.plugins.insomnia.keepAwake();
-        } catch(e){}   
-	}, 1000);
-}
-
 function shuffle(array) {
   var currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -272,6 +260,7 @@ function shuffle(array) {
 function initAd(){
 	admobid = {
     	banner: 'ca-app-pub-9795366520625065/4318048295',
+    	interstitial: 'ca-app-pub-9795366520625065/8940507941'
     };
     
     if(AdMob) AdMob.createBanner({
@@ -279,4 +268,6 @@ function initAd(){
 	    position: AdMob.AD_POSITION.BOTTOM_CENTER,
     	autoShow: true
 	});
+	
+	if(AdMob) AdMob.prepareInterstitial( {adId:admobid.interstitial, autoShow:false} );
 }
