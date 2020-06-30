@@ -21,7 +21,7 @@ game_main.prototype = {
     create: function(){
     	loadSounds();
     	initAd();
-		try{StatusBar.hide;} catch(e){} 
+		try{StatusBar.hide();} catch(e){} 
     	
     	bg = game.add.image(0, 0, 'bg');
     	bg.alpha = 0.22;
@@ -42,7 +42,7 @@ game_main.prototype = {
     		items.push(sprite);
     	}
 
-        power_reset = game.add.sprite(1325, 25, 'power_reset');
+        power_reset = game.add.sprite(1375, 15, 'power_reset');
 		power_reset.inputEnabled = true;
 		power_reset.events.onInputDown.add(function(){
 			location.reload();
@@ -50,15 +50,20 @@ game_main.prototype = {
 			if(AdMob) AdMob.showInterstitial();
 		}, this);
 		power_reset.alpha = 0.8;
-    	
-    	boxTempo = game.add.sprite(1125, 30, 'boxBg');
+		
+		playBtn = game.add.sprite(1260, 55, 'play');
+		playBtn.inputEnabled = true;
+		playBtn.events.onInputDown.add(playMusic, this);
+
+    	boxTempo = game.add.sprite(1100, 40, 'boxBg');
     	boxTempo.scale.set(1.21, 0.9);
     	boxTempo.tint = 0xffaaff;
         boxTempo.inputEnabled = true;
     	boxTempo.events.onInputDown.add(changeTempo, this);
     	
-    	tempoSprite = game.add.sprite(1150, 54, 'tempo');     
-        tempoText = game.add.text(1205, 60, bpm, {font: '28px', fill: '#6e5443', align: 'center'});
+    	tempoSprite = game.add.sprite(1120, boxTempo.y + 15, 'tempo');
+       
+        tempoText = game.add.text(1180, boxTempo.y + 25, bpm, {font: '28px', fill: '#6e5443', align: 'center'});
 
  
         for (n = 0; n < N_ROWS * N_COLUMNS; n++){
@@ -74,8 +79,31 @@ game_main.prototype = {
         }
 
         getBox();  
+        
+        musics[0].play();
+        musics[1].play();
+        musics[2].play();
+        
+        musics[0].mute = true;
+        musics[1].mute = true;
+        musics[2].mute = true;
     }
 };
+
+function playMusic(){
+	if (playBtn.tint == 0xffffff){
+		playBtn.tint = 0x00ff00;
+		playBtn.scale.set(.95, .98);
+		musics[game.rnd.integerInRange(0, musics.length-1)].mute = false;
+	}
+	else{
+		playBtn.tint = 0xffffff;
+		for (m = 0; m < musics.length; m++){
+			playBtn.scale.set(1, 1);
+			musics[m].mute = true;
+		}
+	}
+}
 
 function changeTempo(){
  	resetBpmChange = false;
@@ -236,6 +264,12 @@ function loadSounds(){
 	cookooSfx = game.add.audio('cookoo', 1, false);
 	
 	clockSfx = game.add.audio('clock', 0.7, false);
+	
+	musicSfx = game.add.audio('music', 1, true);
+	music2Sfx = game.add.audio('music2', 1, true);
+	music3Sfx = game.add.audio('music3', 1, true);
+	
+	musics = [musicSfx, music2Sfx, music3Sfx];
         
 	soundsArray = [
 		ballSfx, drumSfx, carSfx, horseSfx, planeSfx, trumpetSfx, trainSfx, alarm_clockSfx, helicopterSfx, cookooSfx
